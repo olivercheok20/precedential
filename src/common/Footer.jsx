@@ -5,7 +5,7 @@ import { Segment } from "semantic-ui-react";
 class Footer extends Component {
     render() {
         return (
-            <Segment inverted vertical as="footer">
+            <Segment inverted vertical as="footer" style={{textAlign: "bottom"}}>
             Created by USPenguins as part of the{" "}
             <a href="http://www.altlaw.xyz/nus-legal-technology-competition">
               Alt Law NUS Legal Technology Competition 2019/20

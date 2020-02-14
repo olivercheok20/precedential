@@ -11,6 +11,7 @@ body {
 
   nav.ui.container .ui.header {
     float: left;
+    vertical-align: middle;
     margin-top: 12px;
   }
 
@@ -29,6 +30,7 @@ nav.ui.container .ui.inverted.compact.menu {
 
 nav.ui.container .ui.inverted.compact.menu .item {
   padding-bottom: 0;
+  width: fluid;
 }
 
 nav.ui.container .ui.inverted.compact.menu .item {
@@ -39,6 +41,10 @@ nav.ui.container .ui.inverted.compact.menu .item {
   margin-left: 16px;
   margin-right: 16px;
   border-radius: 0;
+}
+
+nav.ui.container {
+  height: 10vh;
 }
 
 nav.ui.container .ui.inverted.compact.menu .active.item {
@@ -54,13 +60,11 @@ nav.ui.container .ui.inverted.compact.menu .active.item {
 }
 
 .ui.content.container {
-  height: 300px;
-  position: absolute;
+  height: auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
 }
 
 .ui.content.container h1.header {
@@ -75,9 +79,9 @@ nav.ui.container .ui.inverted.compact.menu .active.item {
 }
 
 .ui.inverted.vertical.segment footer.ui.segment {
-  height: 80px;
-  width: 100%;
   position: absolute;
+  height: 6vh;
+  width: 100%;
   bottom: 0;
   color: gray;
 }

@@ -7,7 +7,7 @@ import DatabaseDescription from "./DatabaseDescription.jsx";
 class Home extends Component {
 
     downloadDatabase() {
-        console.log("Downloading database")
+        console.log("Downloading database");
     }
 
     render() {
@@ -18,7 +18,7 @@ class Home extends Component {
                     Database
                 </Header>
                 <DatabaseDescription />
-                <Button size="huge" onClick={this.downloadDatabase}>Download</Button>
+                <Button size="huge" onClick={this.downloadDatabase}>Download Database</Button>
             </Container>
         )
     }

@@ -18,8 +18,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      home: true,
-      research: false,
+      home: false,
+      research: true,
       database: false,
       resources: false
     };

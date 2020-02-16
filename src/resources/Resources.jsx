@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Container, Header, Icon } from "semantic-ui-react";
+import { Button, Container, Divider, Header, Icon } from "semantic-ui-react";
 
 import ResourcesText from "./ResourcesText.jsx";
 
@@ -16,6 +16,7 @@ class Resources extends Component {
                 <Header inverted as="h1">
                     Resources
                 </Header>
+                <Divider inverted/>
                 <ResourcesText />
                 <Button size="huge" onClick={this.downloadResources}>Download Resources</Button>
             </Container>

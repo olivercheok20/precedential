@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Container, Header, Icon } from "semantic-ui-react";
+import { Button, Container, Divider, Header, Icon } from "semantic-ui-react";
 
 import DatabaseDescription from "./DatabaseDescription.jsx";
 
@@ -17,6 +17,7 @@ class Home extends Component {
                 <Header inverted as="h1">
                     Database
                 </Header>
+                <Divider inverted/>
                 <DatabaseDescription />
                 <Button size="huge" onClick={this.downloadDatabase}>Download Database</Button>
             </Container>

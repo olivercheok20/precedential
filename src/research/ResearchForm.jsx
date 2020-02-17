@@ -118,6 +118,7 @@ const keywordOptions = [
 ]
 
 class ResearchForm extends Component {
+    state = {}
 
     constructor(props) {
         super(props);
@@ -174,6 +175,8 @@ class ResearchForm extends Component {
     }
 
     render() {
+        const { charge, type, quantity, keywords } = this.state;
+
         return (
             <div>
                 <h2>Input case details</h2>
@@ -184,7 +187,7 @@ class ResearchForm extends Component {
                         options={chargeOptions}
                         placeholder='Charge'
                         name='charge'
-                        value={this.state.name}
+                        value={charge}
                         onChange={this.handleDropdownChange('charge')}
                         fluid
                     />
@@ -194,7 +197,7 @@ class ResearchForm extends Component {
                         options={drugOptions}
                         placeholder='Type of Drug'
                         name='type'
-                        value={this.state.type}
+                        value={type}
                         onChange={this.handleDropdownChange('type')}
                         fluid
                     />
@@ -204,7 +207,7 @@ class ResearchForm extends Component {
                         label='Quantity of Drug'
                         placeholder='Quantity of Drug'
                         name='quantity'
-                        value={this.state.quantity}
+                        value={quantity}
                         type='decimal'
                         onChange={this.handleInputChange('quantity')}
                         fluid
@@ -215,7 +218,7 @@ class ResearchForm extends Component {
                         options={keywordOptions}
                         placeholder='Keywords'
                         name='keywords'
-                        value={this.state.keywords}
+                        value={keywords}
                         onChange={this.handleDropdownChange('keywords')}
                         multiple
                         fluid
@@ -227,8 +230,8 @@ class ResearchForm extends Component {
                         handleModalClose={this.handleModalClose.bind(this)} />
                 </Form>
             </div>
-                )
-            }
-        }
-        
-        export default ResearchForm;
+        )
+    }
+}
+
+export default ResearchForm;

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Form, Select, Input } from "semantic-ui-react";
-import Firebase from 'firebase';
-import config from './firebaseConfig';
+import firebase from './firestore';
 
 const chargeOptions = [
     {
@@ -121,13 +120,12 @@ class ResearchForm extends Component {
 
     constructor(props) {
         super(props);
-        Firebase.initializeApp(config.firebase);
 
         this.state = {
-            charge: 1,
-            type: 1,
-            quantity: 1,
-            keywords: ['hello', 'world'],
+            charge: '',
+            type: '',
+            quantity: null,
+            keywords: [],
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -150,8 +148,10 @@ class ResearchForm extends Component {
     }
 
     // handle pushing to firebase on submit
-    handleSubmit = () => {
-        console.log(this.state);
+    handleSubmit = event => {
+        event.preventDefault();
+        const db = firebase.firestore();
+        db.collection('research').add(this.state);
     }
 
     render() {

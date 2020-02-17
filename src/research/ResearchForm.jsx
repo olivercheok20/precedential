@@ -118,7 +118,6 @@ const keywordOptions = [
 ]
 
 class ResearchForm extends Component {
-    state = {}
 
     constructor(props) {
         super(props);
@@ -152,7 +151,10 @@ class ResearchForm extends Component {
 
     // handle pushing to firebase on submit
     handleSubmit = event => {
-        if (this.state.charge || this.state.quantity || this.state.type || (this.state.keywords.length > 0)) {
+        if (this.state.charge ||
+            (this.state.quantity && this.state.quantity > 0) ||
+            this.state.type ||
+            (this.state.keywords.length > 0)) {
             console.log("Submitting form");
             event.preventDefault();
             const db = firebase.firestore();
@@ -204,11 +206,12 @@ class ResearchForm extends Component {
                     <Form.Field
                         inline
                         control={Input}
-                        label='Quantity of Drug'
+                        label='Quantity of Drug (g)'
                         placeholder='Quantity of Drug'
                         name='quantity'
-                        value={quantity}
-                        type='decimal'
+                        value={quantity || ''}
+                        error={this.state.quantity < 0}
+                        type='number'
                         onChange={this.handleInputChange('quantity')}
                         fluid
                     />
@@ -223,7 +226,6 @@ class ResearchForm extends Component {
                         multiple
                         fluid
                     />
-
                     <ResearchModal
                         modalOpen={this.state.modalOpen}
                         handleSubmit={this.handleSubmit.bind(this)}

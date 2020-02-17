@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Form, Select, Input, Modal, Button } from "semantic-ui-react";
+import { Form, Select, Input } from "semantic-ui-react";
+import ResearchModal from './ResearchModal';
 import firebase from './firestore';
 
 const chargeOptions = [
@@ -122,6 +123,7 @@ class ResearchForm extends Component {
         super(props);
 
         this.state = {
+            modalOpen: false,
             charge: '',
             type: '',
             quantity: null,
@@ -149,10 +151,26 @@ class ResearchForm extends Component {
 
     // handle pushing to firebase on submit
     handleSubmit = event => {
-        console.log("Submitting form");
-        event.preventDefault();
-        const db = firebase.firestore();
-        db.collection('research').add(this.state);
+        if (this.state.charge || this.state.quantity || this.state.type || (this.state.keywords.length > 0)) {
+            console.log("Submitting form");
+            event.preventDefault();
+            const db = firebase.firestore();
+            db.collection('research').add(this.state);
+            this.setState({
+                modalOpen: true
+            })
+        }
+    }
+
+    // handle modal closing
+    handleModalClose = () => {
+        this.setState({
+            modalOpen: false,
+            charge: '',
+            type: '',
+            quantity: null,
+            keywords: [],
+        })
     }
 
     render() {
@@ -165,6 +183,8 @@ class ResearchForm extends Component {
                         label='Charge'
                         options={chargeOptions}
                         placeholder='Charge'
+                        name='charge'
+                        value={this.state.name}
                         onChange={this.handleDropdownChange('charge')}
                         fluid
                     />
@@ -173,6 +193,8 @@ class ResearchForm extends Component {
                         label={'Type of Drug'}
                         options={drugOptions}
                         placeholder='Type of Drug'
+                        name='type'
+                        value={this.state.type}
                         onChange={this.handleDropdownChange('type')}
                         fluid
                     />
@@ -181,6 +203,8 @@ class ResearchForm extends Component {
                         control={Input}
                         label='Quantity of Drug'
                         placeholder='Quantity of Drug'
+                        name='quantity'
+                        value={this.state.quantity}
                         type='decimal'
                         onChange={this.handleInputChange('quantity')}
                         fluid
@@ -190,24 +214,21 @@ class ResearchForm extends Component {
                         label={'Keywords'}
                         options={keywordOptions}
                         placeholder='Keywords'
+                        name='keywords'
+                        value={this.state.keywords}
                         onChange={this.handleDropdownChange('keywords')}
                         multiple
                         fluid
                     />
-                    <Modal trigger={<Button primary>Submit</Button>}>
-                        <Modal.Header as="h1">Results</Modal.Header>
-                        <Modal.Content>
-                            <Modal.Header as="h4">Statutes Violated</Modal.Header>
-                            <Modal.Header as="h4">Prescribed Sentence</Modal.Header>
-                            <Modal.Header as="h4">Range of Sentences in Similar Cases</Modal.Header>
-                            <Modal.Header as="h4">Similar Cases</Modal.Header>
-                            <Modal.Header as="h4">Sentencing Estimate</Modal.Header>
-                        </Modal.Content>
-                    </Modal>
+
+                    <ResearchModal
+                        modalOpen={this.state.modalOpen}
+                        handleSubmit={this.handleSubmit.bind(this)}
+                        handleModalClose={this.handleModalClose.bind(this)} />
                 </Form>
             </div>
-        )
-    }
-}
-
-export default ResearchForm;
+                )
+            }
+        }
+        
+        export default ResearchForm;

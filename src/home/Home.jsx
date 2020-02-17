@@ -5,6 +5,7 @@ import { Button, Container, Divider, Header, Image } from "semantic-ui-react";
 import HomeDescription from "./HomeDescription";
 
 class Home extends Component {
+
     render() {
         return (
             <Container className="content">
@@ -12,9 +13,9 @@ class Home extends Component {
                 <Header inverted as="h1">
                     Precedential
                 </Header>
-                <Divider inverted/>
+                <Divider inverted />
                 <HomeDescription />
-                <Button size="huge" onClick={this.props.goToResearch}>Start Research</Button>
+                <Button primary size="huge" onClick={this.props.goToResearch}>Start Research</Button>
             </Container>
         )
     }

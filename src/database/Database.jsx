@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import download from 'downloadjs';
 
 import { Button, Container, Divider, Header, Icon } from "semantic-ui-react";
 
@@ -6,8 +7,11 @@ import DatabaseDescription from "./DatabaseDescription.jsx";
 
 class Home extends Component {
 
-    downloadDatabase() {
-        console.log("Downloading database");
+    downloadDatabase = async () => {
+        console.log("Downloading database...");
+        const res = await fetch('/database');
+        const blob = await res.blob();
+        download(blob, 'database.csv');
     }
 
     render() {
@@ -19,7 +23,7 @@ class Home extends Component {
                 </Header>
                 <Divider inverted/>
                 <DatabaseDescription />
-                <Button size="huge" onClick={this.downloadDatabase}>Download Database</Button>
+                <Button primary size="huge" onClick={this.downloadDatabase}>Download Database</Button>
             </Container>
         )
     }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import download from 'downloadjs';
 
 import { Button, Container, Divider, Header, Icon } from "semantic-ui-react";
 
@@ -6,9 +7,13 @@ import ResourcesText from "./ResourcesText.jsx";
 
 class Resources extends Component {
 
-    downloadResources() {
-        console.log("Downloading resources");
+    downloadResources = async () => {
+        console.log("Downloading resources...");
+        const res = await fetch('/resources');
+        const blob = await res.blob();
+        download(blob, 'resources.pdf');
     }
+
     render() {
         return (
             <Container className="content">
@@ -18,7 +23,7 @@ class Resources extends Component {
                 </Header>
                 <Divider inverted/>
                 <ResourcesText />
-                <Button size="huge" onClick={this.downloadResources}>Download Resources</Button>
+                <Button primary size="huge" onClick={this.downloadResources}>Download Resources</Button>
             </Container>
         )
     }

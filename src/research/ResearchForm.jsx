@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Select, Input } from "semantic-ui-react";
+import { Form, Select, Input, Modal, Button } from "semantic-ui-react";
 import firebase from './firestore';
 
 const chargeOptions = [
@@ -141,7 +141,7 @@ class ResearchForm extends Component {
     }
 
     // handle change in dropdown menu
-    handleDropdownChange = key => (event, {value}) => {
+    handleDropdownChange = key => (event, { value }) => {
         this.setState({
             [key]: value,
         });
@@ -149,6 +149,7 @@ class ResearchForm extends Component {
 
     // handle pushing to firebase on submit
     handleSubmit = event => {
+        console.log("Submitting form");
         event.preventDefault();
         const db = firebase.firestore();
         db.collection('research').add(this.state);
@@ -193,7 +194,16 @@ class ResearchForm extends Component {
                         multiple
                         fluid
                     />
-                    <Form.Button>Submit</Form.Button>
+                    <Modal trigger={<Button primary>Submit</Button>}>
+                        <Modal.Header as="h1">Results</Modal.Header>
+                        <Modal.Content>
+                            <Modal.Header as="h4">Statutes Violated</Modal.Header>
+                            <Modal.Header as="h4">Prescribed Sentence</Modal.Header>
+                            <Modal.Header as="h4">Range of Sentences in Similar Cases</Modal.Header>
+                            <Modal.Header as="h4">Similar Cases</Modal.Header>
+                            <Modal.Header as="h4">Sentencing Estimate</Modal.Header>
+                        </Modal.Content>
+                    </Modal>
                 </Form>
             </div>
         )

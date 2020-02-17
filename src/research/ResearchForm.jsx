@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
 import { Form, Select, Input } from "semantic-ui-react";
+import Firebase from 'firebase';
+import config from './firebaseConfig';
 
 const chargeOptions = [
     {
@@ -118,16 +119,52 @@ const keywordOptions = [
 
 class ResearchForm extends Component {
 
+    constructor(props) {
+        super(props);
+        Firebase.initializeApp(config.firebase);
+
+        this.state = {
+            charge: 1,
+            type: 1,
+            quantity: 1,
+            keywords: ['hello', 'world'],
+        }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleDropdownChange = this.handleDropdownChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    // handle an input change
+    handleInputChange = key => (event) => {
+        this.setState({
+            [key]: event.target.value
+        });
+    }
+
+    // handle change in dropdown menu
+    handleDropdownChange = key => (event, {value}) => {
+        this.setState({
+            [key]: value,
+        });
+    }
+
+    // handle pushing to firebase on submit
+    handleSubmit = () => {
+        console.log(this.state);
+    }
+
     render() {
         return (
             <div>
                 <h2>Input case details</h2>
-                <Form inverted>
+                <Form onSubmit={this.handleSubmit} inverted>
                     <Form.Field
                         control={Select}
                         label='Charge'
                         options={chargeOptions}
                         placeholder='Charge'
+                        onChange={this.handleDropdownChange('charge')}
                         fluid
                     />
                     <Form.Field
@@ -135,6 +172,7 @@ class ResearchForm extends Component {
                         label={'Type of Drug'}
                         options={drugOptions}
                         placeholder='Type of Drug'
+                        onChange={this.handleDropdownChange('type')}
                         fluid
                     />
                     <Form.Field
@@ -143,6 +181,7 @@ class ResearchForm extends Component {
                         label='Quantity of Drug'
                         placeholder='Quantity of Drug'
                         type='decimal'
+                        onChange={this.handleInputChange('quantity')}
                         fluid
                     />
                     <Form.Field
@@ -150,6 +189,7 @@ class ResearchForm extends Component {
                         label={'Keywords'}
                         options={keywordOptions}
                         placeholder='Keywords'
+                        onChange={this.handleDropdownChange('keywords')}
                         multiple
                         fluid
                     />

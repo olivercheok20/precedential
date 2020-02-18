@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Form, Select, Input } from "semantic-ui-react";
 import ResearchModal from './ResearchModal';
-import firebase from './firestore';
 
 const chargeOptions = [
     {
@@ -134,6 +133,11 @@ class ResearchForm extends Component {
             type: '',
             quantity: null,
             keywords: [],
+            statutesViolated: '',
+            prescribedSentence: '',
+            rangeOfSentences: '',
+            similarCases: '',
+            sentencingEstimate: ''
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -156,17 +160,29 @@ class ResearchForm extends Component {
     }
 
     // handle pushing to firebase on submit
-    handleSubmit = event => {
+    handleSubmit = (event) => {
         if (this.state.charge ||
             (this.state.quantity && this.state.quantity > 0) ||
             this.state.type ||
             (this.state.keywords.length > 0)) {
             console.log("Submitting form");
             event.preventDefault();
-            const db = firebase.firestore();
-            db.collection('research').add(this.state);
-            this.setState({
-                modalOpen: true
+            fetch('/research', {
+                method: 'GET',
+                headers: this.state
+            }).then((res) => {
+                const resJson = res.json();
+                return resJson;
+            }).then((resJson) => {
+                console.log(resJson);
+                this.setState({
+                    modalOpen: true,
+                    statutesViolated: resJson.statutesViolated,
+                    prescribedSentence: resJson.prescribedSentence,
+                    rangeOfSentences: resJson.rangeOfSentences,
+                    similarCases: resJson.similarCases,
+                    sentencingEstimate: resJson.sentencingEstimate
+                })
             })
         }
     }
@@ -235,7 +251,13 @@ class ResearchForm extends Component {
                     <ResearchModal
                         modalOpen={this.state.modalOpen}
                         handleSubmit={this.handleSubmit.bind(this)}
-                        handleModalClose={this.handleModalClose.bind(this)} />
+                        handleModalClose={this.handleModalClose.bind(this)}
+                        statutesViolated={this.state.statutesViolated}
+                        prescribedSentence={this.state.prescribedSentence}
+                        rangeOfSentences={this.state.rangeOfSentences}
+                        similarCases={this.state.similarCases}
+                        sentencingEstimate={this.state.sentencingEstimate}
+                    />
                 </Form>
             </div>
         )

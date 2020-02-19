@@ -21,7 +21,9 @@ class ResearchModal extends Component {
                     <p>{this.props.prescribedSentence}</p>
                     <Divider />
                     <Modal.Header as="h4">Range of Sentences in Similar Cases</Modal.Header>
-                    <p>{this.props.rangeOfSentences}</p>
+                    <p>{this.props.rangeOfSentences[0]}</p>
+                    <p>{this.props.rangeOfSentences[1]}</p>
+                    <p>{this.props.rangeOfSentences[2]}</p>
                     <Divider />
                     <Modal.Header as="h4">Similar Cases</Modal.Header>
                     <p>{this.props.similarCases.length} similar cases found.</p>

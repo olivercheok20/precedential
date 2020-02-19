@@ -70,6 +70,17 @@ app.get('/research', async (req, res) => {
 
     similarCasesData = allSimilarCasesData(cases, charge, type);
     similarCases = similarCasesData.similarCases;
+    minimumStrokes = similarCasesData.minimumStrokes;
+    maximumStrokes = similarCasesData.maximumStrokes;
+    minimumMonths = similarCasesData.minimumMonths;
+    maximumMonths = similarCasesData.maximumMonths;
+    minimumFine = similarCasesData.minimumFine;
+    maximumFine = similarCasesData.maximumFine;
+
+    rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
+    rangeOfSentences.push("Maximum $" + maximumFine + " fine; Minimum $" + minimumFine + " fine")
+    rangeOfSentences.push("Maximum " + maximumStrokes + " strokes; Minimum " + minimumStrokes + " strokes");
+    console.log(rangeOfSentences);
 
     switch (charge) {
         case "Import and export of controlled drugs":
@@ -214,7 +225,7 @@ app.get('/research', async (req, res) => {
     res.send({
         statutesViolated: statutesViolated,
         prescribedSentence: prescribedSentence,
-        rangeOfSentences: '3',
+        rangeOfSentences: rangeOfSentences,
         similarCases: similarCases,
         sentencingEstimate: '5'
     });

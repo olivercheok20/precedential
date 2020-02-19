@@ -24,9 +24,9 @@ const chargeOptions = [
         value: 'Import and export of controlled drugs',
     },
     {
-        key: 'manufacture',
-        text: 'Manufacture of controlled drugs',
-        value: 'Manufacture of controlled drugs',
+        key: 'arranging or planning gatherings where controlled drugs are to be consumed or trafficked',
+        text: 'Arranging or planning gatherings where controlled drugs are to be consumed or trafficked',
+        value: 'Arranging or planning gatherings where controlled drugs are to be consumed or trafficked',
     },
     {
         key: 'utensils',

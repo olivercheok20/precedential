@@ -81,13 +81,13 @@ app.get('/research', async (req, res) => {
         if (Number.isInteger(minimumMonths / 12)) {
             rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
         } else {
-            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths + " months"]
+            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
         }
     } else {
         if (Number.isInteger(minimumMonths / 12)) {
-            rangeOfSentences = ["Maximum " + maximumMonths + " months; Minimum " + minimumMonths / 12 + " years"]
+            rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + minimumMonths / 12 + " years"]
         } else {
-            rangeOfSentences = ["Maximum " + maximumMonths + " months; Minimum " + minimumMonths + " months"]
+            rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
         }
     }
 

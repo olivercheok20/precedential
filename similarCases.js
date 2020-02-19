@@ -65,7 +65,7 @@ function allSimilarCasesData(cases, charge, type) {
             }
         }
     }
-    console.log(similarCases.length, "similar cases found");
+    // console.log(similarCases.length, "similar cases found");
     result = {
         "similarCases": similarCases,
         "minimumStrokes": minimumStrokes,

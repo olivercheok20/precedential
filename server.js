@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const firebase = require("firebase/app");
 const googleApi = require('./googleApi');
 const firebaseConfig = require('./firebaseConfig');
+const { allSimilarCases } = require('./similarCases');
 const fs = require('fs');
 require("firebase/firestore");
 
@@ -33,7 +34,7 @@ app.get('/resources', (req, res) => {
     res.download(file);
 });
 
-app.get('/research', (req, res) => {
+app.get('/research', async (req, res) => {
     const charge = req.headers.charge;
     const type = req.headers.type;
     const quantity = req.headers.quantity;
@@ -47,8 +48,10 @@ app.get('/research', (req, res) => {
     let similarCases = '';
     let sentencingEstimate = '';
 
+    let cases = [];
+
     let caseRef = firestore.collection('research');
-    let query = caseRef.get()
+    let query = await caseRef.get()
         .then(snapshot => {
             if (snapshot.empty) {
                 console.log('No matching documents.');
@@ -56,12 +59,17 @@ app.get('/research', (req, res) => {
             }
 
             snapshot.forEach(doc => {
-                console.log(doc.id, '=>', doc.data());
+                docData = doc.data()
+                // console.log(doc.id, '=>', docData);
+                cases.push(docData);
             })
         })
         .catch(err => {
             console.log('Error getting documents', err);
         })
+
+    allSimilarCases(cases, charge, type);
+
 
     switch (charge) {
         case "Import and export of controlled drugs":
@@ -103,38 +111,106 @@ app.get('/research', (req, res) => {
             class_of_drug = "S";
     }
 
-    if (statutesViolated == "5 Trafficking in controlled drugs") {
+    // Add death penalty stuff
+
+    if (statutesViolated === "5 Trafficking in controlled drugs") {
         switch (class_of_drug) {
             case "A":
                 prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+                if (type === "Opium" && quantity > 800) {
+                    if (quantity > 1200) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Diamorphine" && quantity > 10) {
+                    if (quantity > 15) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Cannabis" && quantity > 330) {
+                    if (quantity > 500) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Cannabis mixture" && quantity > 660) {
+                    if (quantity > 1000) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Methamphetamine" && quantity > 167) {
+                    if (quantity > 250) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                }
             case "B":
                 prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 3 years and 3 strokes"
             case "C":
                 prescribedSentence = "Maximum 10 years and 5 strokes; Minimum 2 years and 2 strokes"
             case "S":
-                // CHECK DRUG TYPE
-                // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+            // CHECK DRUG TYPE
+            // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+            default:
+                prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 2 years and 2 strokes"
         }
-    } else if (statutesViolated == "7 Import and export of controlled drugs") {
+    } else if (statutesViolated === "7 Import and export of controlled drugs") {
         switch (class_of_drug) {
             case "A":
                 prescribedSentence = "Maximum 30 years and 15 strokes; Minimum 5 years and 5 strokes"
+                if (type === "Opium" && quantity > 800) {
+                    if (quantity > 1200) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Diamorphine" && quantity > 10) {
+                    if (quantity > 15) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Cannabis" && quantity > 330) {
+                    if (quantity > 500) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Cannabis mixture" && quantity > 660) {
+                    if (quantity > 1000) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                } else if (type === "Methamphetamine" && quantity > 167) {
+                    if (quantity > 250) {
+                        prescribedSentence = "Death"
+                    } else {
+                        prescribedSentence = "Maximum 30 years or imprisonment for life and 15 strokes; Minimum 20 years and 15 strokes"
+                    }
+                }
             case "B":
                 prescribedSentence = "Maximum 30 years and 15 strokes; Minimum 5 years and 5 strokes"
             case "C":
                 prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 3 years and 5 strokes"
             case "S":
-                // CHECK DRUG TYPE
-                // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+            // CHECK DRUG TYPE
+            // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+            default:
+                prescribedSentence = "Maximum 30 years and 15 strokes; Minimum 3 years and 5 strokes"
         }
-    } else if (statutesViolated == "8 Possession of controlled drugs") {
+    } else if (statutesViolated === "8 Possession of controlled drugs") {
         prescribedSentence = "Maximum 10 years or $20,000 or both; Minimum for second or subsequent offence 2 years"
-    } else if (statutesViolated == "8 Consumption of controlled drugs") {
+    } else if (statutesViolated === "8 Consumption of controlled drugs") {
         prescribedSentence = "Maximum 10 years or $20,000 or both"
-    } else if (statutesViolated == "9 Possession of pipes, utensils, etc.") {
+    } else if (statutesViolated === "9 Possession of pipes, utensils, etc.") {
         prescribedSentence = "Maximum 3 years or $10,000 or both"
-    } else if (statutesViolated == "11A Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {
-        prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 5 years and 3 strokes"        
+    } else if (statutesViolated === "11A Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {
+        prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 3 years"
     }
 
     res.send({

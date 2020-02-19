@@ -11,7 +11,7 @@ class Home extends Component {
         console.log("Downloading database...");
         const res = await fetch('/database');
         const blob = await res.blob();
-        download(blob, 'database.csv');
+        download(blob, 'database.xlsx');
     }
 
     render() {

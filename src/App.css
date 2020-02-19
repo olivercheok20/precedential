@@ -3,6 +3,10 @@ body {
   -moz-font-smoothing: grayscale;
 }
 
+li {
+  margin: 10px 0;
+}
+
 @media only screen and (min-width: 768px) {
   .ui.container {
     width: 700px;

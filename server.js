@@ -77,10 +77,22 @@ app.get('/research', async (req, res) => {
     minimumFine = similarCasesData.minimumFine;
     maximumFine = similarCasesData.maximumFine;
 
-    rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
+    if (Number.isInteger(maximumMonths / 12)) {
+        if (Number.isInteger(minimumMonths / 12)) {
+            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
+        } else {
+            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths + " months"]
+        }
+    } else {
+        if (Number.isInteger(minimumMonths / 12)) {
+            rangeOfSentences = ["Maximum " + maximumMonths + " months; Minimum " + minimumMonths / 12 + " years"]
+        } else {
+            rangeOfSentences = ["Maximum " + maximumMonths + " months; Minimum " + minimumMonths + " months"]
+        }
+    }
+
     rangeOfSentences.push("Maximum $" + maximumFine + " fine; Minimum $" + minimumFine + " fine")
     rangeOfSentences.push("Maximum " + maximumStrokes + " strokes; Minimum " + minimumStrokes + " strokes");
-    console.log(rangeOfSentences);
 
     switch (charge) {
         case "Import and export of controlled drugs":

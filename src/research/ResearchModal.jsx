@@ -24,7 +24,7 @@ class ResearchModal extends Component {
                     <p>{this.props.rangeOfSentences}</p>
                     <Divider />
                     <Modal.Header as="h4">Similar Cases</Modal.Header>
-                    <p>{this.props.similarCases}</p>
+                    <p>{this.props.similarCases.length} similar cases found.</p>
                     <Divider />
                     <Modal.Header as="h4">Sentencing Estimate</Modal.Header>
                     <p>{this.props.sentencingEstimate}</p>

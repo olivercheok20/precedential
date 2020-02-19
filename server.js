@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const firebase = require("firebase/app");
 const googleApi = require('./googleApi');
 const firebaseConfig = require('./firebaseConfig');
-const { allSimilarCases } = require('./similarCases');
+const { allSimilarCasesData } = require('./similarCases');
 const fs = require('fs');
 require("firebase/firestore");
 
@@ -68,8 +68,8 @@ app.get('/research', async (req, res) => {
             console.log('Error getting documents', err);
         })
 
-    allSimilarCases(cases, charge, type);
-
+    similarCasesData = allSimilarCasesData(cases, charge, type);
+    similarCases = similarCasesData.similarCases;
 
     switch (charge) {
         case "Import and export of controlled drugs":
@@ -110,8 +110,6 @@ app.get('/research', async (req, res) => {
         case "MDMA":
             class_of_drug = "S";
     }
-
-    // Add death penalty stuff
 
     if (statutesViolated === "5 Trafficking in controlled drugs") {
         switch (class_of_drug) {
@@ -217,7 +215,7 @@ app.get('/research', async (req, res) => {
         statutesViolated: statutesViolated,
         prescribedSentence: prescribedSentence,
         rangeOfSentences: '3',
-        similarCases: '4',
+        similarCases: similarCases,
         sentencingEstimate: '5'
     });
 })

@@ -2,27 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const firebase = require("firebase/app");
 const googleApi = require('./googleApi');
+const firebaseConfig = require('./firebaseConfig');
 const fs = require('fs');
-const {google} = require('googleapis');
 require("firebase/firestore");
 
-// Store firebase config
-const config = {
-    apiKey: "AIzaSyAWfGKenmRNuZiyMBEVFAwfAUja2zJsBO0",
-    authDomain: "precedential-uspenguins.firebaseapp.com",
-    databaseURL: "https://precedential-uspenguins.firebaseio.com",
-    projectId: "precedential-uspenguins",
-    storageBucket: "precedential-uspenguins.appspot.com",
-    messagingSenderId: "170438518858",
-    appId: "1:170438518858:web:917c0279abcb139fcd9eb3",
-    measurementId: "G-CT2KKRQ34K"
-};
-firebase.initializeApp(config);
-
-// The file token.json stores the user's access and refresh tokens, and is
-// created automatically when the authorization flow completes for the first
-// time.
-const TOKEN_PATH = 'token.json';
+firebase.initializeApp(firebaseConfig.config);
 
 const app = express();
 const port = process.env.PORT || 5000;

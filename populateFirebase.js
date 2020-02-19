@@ -1,6 +1,11 @@
 const fs = require('fs');
 const readline = require('readline');
+const firebase = require("firebase/app");
 const {google} = require('googleapis');
+const firebaseConfig = require('./firebaseConfig');
+require("firebase/firestore");
+
+firebase.initializeApp(firebaseConfig.config);
 
 // If modifying these scopes, delete token.json.
 const SCOPES = [
@@ -20,7 +25,12 @@ const TOKEN_PATH = 'token.json';
 
 // File ID and storage path
 const FILE_ID = '1AF4iA0klrmXcVOt8XcPTn3Wc38UcoFFAkb0hLRd__DM';
-const DEST_PATH = './database.xlsx';
+
+fs.readFile('credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Drive API.
+    authorize(JSON.parse(content), refreshCollection);
+});
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -73,36 +83,36 @@ function getAccessToken(oAuth2Client, callback) {
 }
 
 /**
- * Downloads a particular file from Google Drive.
- * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * Runs through the sheet and adds data to firebase.
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client. 
  */
-function downloadFile(auth) {
-    const drive = google.drive({version: 'v3', auth});
-    const fileDest = fs.createWriteStream(DEST_PATH);
-    let progress = 0;
+function refreshCollection(auth) {
+    // Setup firebase
+    const db = firebase.firestore();
 
-    drive.files.export(
-        { fileId: FILE_ID, mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
-        { responseType: 'stream' }
-    ).then(res => {
-        res.data
-            .on('end', () => {
-                console.log('Done downloading file.');
-            })  
-            .on('error', err => {
-                console.error('Error downloading file.');
-            })  
-            .on('data', d => {
-                progress += d.length;
-                if (process.stdout.isTTY) {
-                    process.stdout.clearLine();
-                    process.stdout.cursorTo(0);
-                    process.stdout.write(`Downloaded ${progress} bytes`);
-                }   
-            })  
-            .pipe(fileDest);
+    // Iterate through sheet and update data
+    const sheets = google.sheets({version: 'v4', auth});
+    sheets.spreadsheets.values.get({
+        spreadsheetId: FILE_ID,
+        range: 'Sheet1!A1:Z',
+    }, (err, res) => {
+        if (err) return console.log('The API returned an error: ' + err);
+        const rows = res.data.values;
+
+        // store list of dictionary keys
+        const keys = rows[0];
+        rows.shift();
+        
+        if (rows.length) {
+            rows.map((row) => {
+                var mapping = generateMapping(keys, row);
+                console.log(`Adding row ${mapping['serial_number']}`);
+                db.collection('research').doc(mapping['serial_number'].toString()).set(mapping);
+            });
+        } else {
+            console.log('No data found.');
         }
-    );
+    });
 }
 
 ////////////////////////////////////////////////
@@ -110,31 +120,19 @@ function downloadFile(auth) {
 ////////////////////////////////////////////////
 
 /**
- * Lists the names and IDs of up to 10 files.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ * Helper function to create dictionary data.
+ * @param {array} keys List of keys.
+ * @param {array} values List of values
+ * @return Mapping of key-values.
  */
-function listFiles(auth) {
-    const drive = google.drive({version: 'v3', auth});
-    drive.files.list({
-        pageSize: 10,
-        fields: 'nextPageToken, files(id, name)',
-    }, (err, res) => {
-        if (err) return console.log('The API returned an error: ' + err);
-        const files = res.data.files;
-        if (files.length) {
-            console.log('Files:');
-            files.map((file) => {
-                console.log(`${file.name} (${file.id})`);
-            });
-        } else {
-            console.log('No files found.');
-        }
-    });
-}
+function generateMapping(keys, values) {
+    var mapping = {};
 
-// Export functions
-module.exports = {
-    authorize,
-    downloadFile,
-    listFiles
+    for (i = 0; i < keys.length; i++) {
+        mapping[keys[i]] = (!isNaN(values[i]) && isFinite(values[i])) ? parseFloat(values[i]) : values[i];
+        if (mapping[keys[i]] == null)
+            mapping[keys[i]] = '';
+    }
+
+    return mapping;
 }

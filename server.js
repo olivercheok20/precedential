@@ -39,6 +39,8 @@ app.get('/research', (req, res) => {
     const quantity = req.headers.quantity;
     const keywords = req.headers.keywords;
 
+    let class_of_drug = '';
+
     let statutesViolated = '';
     let prescribedSentence = '';
     let rangeOfSentences = '';
@@ -80,7 +82,25 @@ app.get('/research', (req, res) => {
         case "Possession of pipes, utensils, etc.":
             statutesViolated = '9 Possession of pipes, utensils, etc.';
             break;
+    }
 
+    switch (type) {
+        case "Cannabis":
+        case "Diamorphine":
+        case "Methamphetamine":
+        case "Monoacetylmorphine":
+        case "Ketamine":
+        case "Opium":
+        case "Phenethylamine":
+        case "Cannabis mixture":
+        case "Synthetic cannabinoid":
+        case "Cannabinol":
+        case "25B-NBOMe":
+            class_of_drug = A;
+        case "Nimetazepam":
+            class_of_drug = C;
+        case "MDMA":
+            class_of_drug = S;
     }
 
     res.send({

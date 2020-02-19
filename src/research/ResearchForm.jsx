@@ -52,9 +52,9 @@ const drugOptions = [
         value: 'Methamphetamine'
     },
     {
-        key: 'Monoacetyl Morphine',
-        text: 'Monoacetyl Morphine',
-        value: 'Monoacetyl Morphine'
+        key: 'Monoacetylmorphine',
+        text: 'Monoacetylmorphine',
+        value: 'Monoacetylmorphine'
     },
     {
         key: 'Ketamine',
@@ -77,37 +77,37 @@ const drugOptions = [
         value: 'Phenethylamine'
     },
     {
-        key: 'Monoacetylmorphine',
-        text: 'Monoacetylmorphine',
-        value: 'Monoacetylmorphine'
+        key: 'Cannabis mixture',
+        text: 'Cannabis mixture',
+        value: 'Cannabis mixture'
     },
+    {
+        key: 'Synthetic cannabinoid',
+        text: 'Synthetic cannabinoid',
+        value: 'Synthetic cannabinoid'
+    },
+    {
+        key: 'Cannabinol',
+        text: 'Cannabinol',
+        value: 'Cannabinol'
+    },
+    {
+        key: '25B-NBOMe',
+        text: '25B-NBOMe',
+        value: '25B-NBOMe'
+    },
+    {
+        key: 'MDMA',
+        text: 'MDMA',
+        value: 'MDMA'
+    }
 ]
 
 const keywordOptions = [
     {
-        key: 'spiked drink',
-        text: 'Spiked Drink',
-        value: 'Spiked Drink',
-    },
-    {
-        key: 'first offender',
-        text: 'First Offender',
-        value: 'First Offender',
-    },
-    {
         key: 'family circumstances',
         text: 'Family Circumstances',
         value: 'Family Circumstances',
-    },
-    {
-        key: 'remorse',
-        text: 'Remorse',
-        value: 'Remorse',
-    },
-    {
-        key: 'certificate of substantive assistance',
-        text: 'Certificate of Substantive Assistance',
-        value: 'Certificate of Substantive Assistance',
     },
     {
         key: 'mental condition',
@@ -115,11 +115,90 @@ const keywordOptions = [
         value: 'Mental Condition',
     },
     {
-        key: 'Others',
-        text: 'Others',
-        value: 'Others',
+        key: 'certificate of substantive assistance',
+        text: 'Certificate of Substantive Assistance',
+        value: 'Certificate of Substantive Assistance',
+    },
+    {
+        key: 'insufficient evidence',
+        text: 'Insufficient Evidence',
+        value: 'Insufficient Evidence',
+    },
+    {
+        key: 'spiked drink',
+        text: 'Spiked Drink',
+        value: 'Spiked Drink',
+    },
+    {
+        key: 'cooperative',
+        text: 'Cooperative',
+        value: 'Cooperative',
+    },
+    {
+        key: 'remand',
+        text: 'Remand',
+        value: 'Remand',
+    },
+    {
+        key: 'first offender',
+        text: 'First Offender',
+        value: 'First Offender',
+    },
+    {
+        key: 'knowledge',
+        text: 'Knowledge',
+        value: 'Knowledge',
+    },
+    {
+        key: 'no wilful blindness',
+        text: 'No Wilful Blindness',
+        value: 'No Wilful Blindness',
+    },
+    {
+        key: 'remorse',
+        text: 'Remorse',
+        value: 'Remorse',
+    },
+    {
+        key: 'statutory presumption',
+        text: 'Statutory Presumption',
+        value: 'Statutory Presumption',
+    },
+    {
+        key: 'not mastermind',
+        text: 'Not Mastermind',
+        value: 'Not Mastermind',
+    },
+    {
+        key: 'one-off transaction',
+        text: 'One-off Transaction',
+        value: 'One-off Transaction',
+    },
+    {
+        key: 'courier',
+        text: 'Courier',
+        value: 'Courier',
+    },
+    {
+        key: 'clean record',
+        text: 'Clean Record',
+        value: 'Clean Record',
+    },
+    {
+        key: 'good character',
+        text: 'Good Character',
+        value: 'Good Character',
+    },
+    {
+        key: 'pleaded guilty',
+        text: 'Pleaded Guilty',
+        value: 'Pleaded Guilty',
+    },
+    {
+        key: 'wilful blindness',
+        text: 'Wilful Blindness',
+        value: 'Wilful Blindness',
     }
-
 ]
 
 class ResearchForm extends Component {

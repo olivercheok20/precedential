@@ -95,7 +95,7 @@ function refreshCollection(auth) {
     sheets.spreadsheets.values.get({
         spreadsheetId: FILE_ID,
         range: 'Sheet1!A1:Z',
-    }, (err, res) => {
+    }, async (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
         const rows = res.data.values;
 
@@ -126,12 +126,19 @@ function refreshCollection(auth) {
  * @return Mapping of key-values.
  */
 function generateMapping(keys, values) {
+    const NUMERIC_FIELDS = new Set(['abetment', 'serial_number', 'number_of_accused', 'quantity', 'fine', 'death_penalty', 'life_imprisonment', 'imprisonment_years', 'imprisonment_months', 'imprisonment_days', 'strokes_of_cane', 'months_in_reformative_training', 'concurrent_sentence', 'age']);
     var mapping = {};
 
     for (i = 0; i < keys.length; i++) {
-        mapping[keys[i]] = (!isNaN(values[i]) && isFinite(values[i])) ? parseFloat(values[i]) : values[i];
-        if (mapping[keys[i]] == null)
-            mapping[keys[i]] = '';
+        if (keys[i] == 'keywords') {
+            mapping[keys[i]] = (values[i] == null) ? [] : values[i].split(',');
+        }
+        else if (values[i] == null) {
+            mapping[keys[i]] = NUMERIC_FIELDS.has(keys[i]) ? NaN : '';
+        }
+        else {
+            mapping[keys[i]] = NUMERIC_FIELDS.has(keys[i]) ? parseFloat(values[i]) : values[i];
+        }
     }
 
     return mapping;

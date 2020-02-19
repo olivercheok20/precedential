@@ -103,9 +103,43 @@ app.get('/research', (req, res) => {
             class_of_drug = S;
     }
 
+    if (statutesViolated == "5 Trafficking in controlled drugs") {
+        switch (class_of_drug) {
+            case "A":
+                prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+            case "B":
+                prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 3 years and 3 strokes"
+            case "C":
+                prescribedSentence = "Maximum 10 years and 5 strokes; Minimum 2 years and 2 strokes"
+            case "S":
+                // CHECK DRUG TYPE
+                // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+        }
+    } else if (statutesViolated == "7 Import and export of controlled drugs") {
+        switch (class_of_drug) {
+            case "A":
+                prescribedSentence = "Maximum 30 years and 15 strokes; Minimum 5 years and 5 strokes"
+            case "B":
+                prescribedSentence = "Maximum 30 years and 15 strokes; Minimum 5 years and 5 strokes"
+            case "C":
+                prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 3 years and 5 strokes"
+            case "S":
+                // CHECK DRUG TYPE
+                // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
+        }
+    } else if (statutesViolated == "8 Possession of controlled drugs") {
+        prescribedSentence = "Maximum 10 years of $20,000 or both; Minimum for second or subsequent offence 2 years"
+    } else if (statutesViolated == "8 Consumption of controlled drugs") {
+        prescribedSentence = "No prescribed sentence"
+    } else if (statutesViolated == "9 Possession of pipes, utensils, etc.") {
+        prescribedSentence = "Maximum 3 years or $10,000 or both"
+    } else if (statutesViolated == "11A Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {
+        prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 5 years and 3 strokes"        
+    }
+
     res.send({
         statutesViolated: statutesViolated,
-        prescribedSentence: '2',
+        prescribedSentence: prescribedSentence,
         rangeOfSentences: '3',
         similarCases: '4',
         sentencingEstimate: '5'

@@ -96,11 +96,11 @@ app.get('/research', (req, res) => {
         case "Synthetic cannabinoid":
         case "Cannabinol":
         case "25B-NBOMe":
-            class_of_drug = A;
+            class_of_drug = "A";
         case "Nimetazepam":
-            class_of_drug = C;
+            class_of_drug = "C";
         case "MDMA":
-            class_of_drug = S;
+            class_of_drug = "S";
     }
 
     if (statutesViolated == "5 Trafficking in controlled drugs") {
@@ -128,9 +128,9 @@ app.get('/research', (req, res) => {
                 // prescribedSentence = "Maximum 20 years and 15 strokes; Minimum 5 years and 5 strokes"
         }
     } else if (statutesViolated == "8 Possession of controlled drugs") {
-        prescribedSentence = "Maximum 10 years of $20,000 or both; Minimum for second or subsequent offence 2 years"
+        prescribedSentence = "Maximum 10 years or $20,000 or both; Minimum for second or subsequent offence 2 years"
     } else if (statutesViolated == "8 Consumption of controlled drugs") {
-        prescribedSentence = "No prescribed sentence"
+        prescribedSentence = "Maximum 10 years or $20,000 or both"
     } else if (statutesViolated == "9 Possession of pipes, utensils, etc.") {
         prescribedSentence = "Maximum 3 years or $10,000 or both"
     } else if (statutesViolated == "11A Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {

@@ -23,7 +23,7 @@ class ResearchModal extends Component {
                     <Divider />
                     <Modal.Header as="h4">Range of Sentences in Similar Cases</Modal.Header>
                     {
-                        (this.props.similarCases > 0) &&
+                        (this.props.similarCases.length > 0) &&
                         <div>
                             <p>{this.props.rangeOfSentences[0]}</p>
                             <p>{this.props.rangeOfSentences[1]}</p>
@@ -31,7 +31,7 @@ class ResearchModal extends Component {
                         </div>
                     }
                     {
-                        (this.props.similarCases < 1) &&
+                        (this.props.similarCases.length < 1) &&
                         <p>{"0 similar cases found."}</p>
                     }
                     <Divider />

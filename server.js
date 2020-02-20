@@ -86,23 +86,37 @@ app.get('/research', async (req, res) => {
     maximumMonths = similarCasesData.maximumMonths;
     minimumFine = similarCasesData.minimumFine;
     maximumFine = similarCasesData.maximumFine;
+    minimumMonthsInReform = similarCasesData.minimumMonthsInReform;
+    maximumMonthsInReform = similarCasesData.maximumMonthsInReform;
 
-    if (Number.isInteger(maximumMonths / 12)) {
-        if (Number.isInteger(minimumMonths / 12)) {
-            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
-        } else {
-            rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
-        }
+    console.log(minimumMonthsInReform);
+    console.log(maximumMonthsInReform);
+
+    if (maximumMonthsInReform > 0) {
+        rangeOfSentences = ["Maximum months in reformative training: " + maximumMonthsInReform];
+        rangeOfSentences.push("Minimum months in reformative training: " + minimumMonthsInReform);
+        rangeOfSentences.push("");
     } else {
-        if (Number.isInteger(minimumMonths / 12)) {
-            rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + minimumMonths / 12 + " years"]
+
+        if (Number.isInteger(maximumMonths / 12)) {
+            if (Number.isInteger(minimumMonths / 12)) {
+                rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + minimumMonths / 12 + " years"]
+            } else {
+                rangeOfSentences = ["Maximum " + maximumMonths / 12 + " years; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
+            }
         } else {
-            rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
+            if (Number.isInteger(minimumMonths / 12)) {
+                rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + minimumMonths / 12 + " years"]
+            } else {
+                rangeOfSentences = ["Maximum " + Math.floor(maximumMonths / 12) + " years " + maximumMonths % 12 + " months; Minimum " + Math.floor(minimumMonths / 12) + " years " + minimumMonths % 12 + " months"]
+            }
         }
+
+        rangeOfSentences.push("Maximum $" + maximumFine + " fine; Minimum $" + minimumFine + " fine")
+        rangeOfSentences.push("Maximum " + maximumStrokes + " strokes; Minimum " + minimumStrokes + " strokes");
     }
 
-    rangeOfSentences.push("Maximum $" + maximumFine + " fine; Minimum $" + minimumFine + " fine")
-    rangeOfSentences.push("Maximum " + maximumStrokes + " strokes; Minimum " + minimumStrokes + " strokes");
+    console.log(rangeOfSentences);
 
     switch (charge) {
         case "Import and export of controlled drugs":

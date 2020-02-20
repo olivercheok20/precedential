@@ -6,6 +6,8 @@ function allSimilarCasesData(cases, charge, type) {
     maximumMonths = 0;
     minimumFine = Number.POSITIVE_INFINITY
     maximumFine = 0;
+    minimumMonthsInReform = Number.POSITIVE_INFINITY;
+    maximumMonthsInReform = 0;
     for (var i = 0; i < cases.length; i++) {
         if (containsCharge(cases[i], charge)) {
             if (charge == "Possession of pipes, utensils, etc." || charge == "Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {
@@ -15,7 +17,8 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty) {
                         minimumStrokes = cases[i].strokes_of_cane
                     }
-                } else if (cases[i].strokes_of_cane > maximumStrokes) {
+                }
+                if (cases[i].strokes_of_cane > maximumStrokes) {
                     maximumStrokes = cases[i].strokes_of_cane
                 }
 
@@ -23,7 +26,8 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty) {
                         minimumFine = cases[i].fine
                     }
-                } else if (cases[i].fine > maximumFine) {
+                }
+                if (cases[i].fine > maximumFine) {
                     maximumFine = cases[i].fine
                 }
 
@@ -31,8 +35,18 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty && !cases[i].life_imprisonment) {
                         minimumMonths = numberOfMonths(cases[i])
                     }
-                } else if (numberOfMonths(cases[i]) > maximumMonths) {
+                }
+                if (numberOfMonths(cases[i]) > maximumMonths) {
                     maximumMonths = numberOfMonths(cases[i])
+                }
+
+                if (cases[i].months_in_reformative_training < minimumMonthsInReform) {
+                    if (!cases[i].death_penalty && !cases[i].life_imprisonment) {
+                        minimumMonthsInReform = cases[i].months_in_reformative_training;
+                    }
+                }
+                if (cases[i].months_in_reformative_training > maximumMonthsInReform) {
+                    maximumMonthsInReform = cases[i].months_in_reformative_training;
                 }
 
             } else if (type && containsType(cases[i], type)) {
@@ -42,7 +56,8 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty) {
                         minimumStrokes = cases[i].strokes_of_cane
                     }
-                } else if (cases[i].strokes_of_cane > maximumStrokes) {
+                }
+                if (cases[i].strokes_of_cane > maximumStrokes) {
                     maximumStrokes = cases[i].strokes_of_cane
                 }
 
@@ -50,7 +65,8 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty) {
                         minimumFine = cases[i].fine
                     }
-                } else if (cases[i].fine > maximumFine) {
+                }
+                if (cases[i].fine > maximumFine) {
                     maximumFine = cases[i].fine
                 }
 
@@ -58,13 +74,23 @@ function allSimilarCasesData(cases, charge, type) {
                     if (!cases[i].death_penalty && !cases[i].life_imprisonment) {
                         minimumMonths = numberOfMonths(cases[i])
                     }
-                } else if (numberOfMonths(cases[i]) > maximumMonths) {
+                }
+                if (numberOfMonths(cases[i]) > maximumMonths) {
                     maximumMonths = numberOfMonths(cases[i])
                 }
 
+                if (cases[i].months_in_reformative_training < minimumMonthsInReform) {
+                    if (!cases[i].death_penalty && !cases[i].life_imprisonment) {
+                        minimumMonthsInReform = cases[i].months_in_reformative_training;
+                    }
+                }
+                if (cases[i].months_in_reformative_training > maximumMonthsInReform) {
+                    maximumMonthsInReform = cases[i].months_in_reformative_training;
+                }
             }
         }
     }
+
     // console.log(similarCases.length, "similar cases found");
     result = {
         "similarCases": similarCases,
@@ -73,7 +99,9 @@ function allSimilarCasesData(cases, charge, type) {
         "minimumMonths": minimumMonths,
         "maximumMonths": maximumMonths,
         "minimumFine": minimumFine,
-        "maximumFine": maximumFine
+        "maximumFine": maximumFine,
+        "minimumMonthsInReform": minimumMonthsInReform,
+        "maximumMonthsInReform": maximumMonthsInReform
     }
     return result;
 }

@@ -38,7 +38,10 @@ class CaseList extends Component {
                             {caseJson.case_name}
                             <ul>
                                 <li>{caseJson.charge}</li>
-                                <li>{caseJson.type}</li>
+                                {
+                                    ((caseJson.charge !== "Possession of pipes, utensils, etc.") && (caseJson.charge !== "Arranging or planning gatherings where controlled drugs are to be consumed or trafficked")) &&
+                                    <li>{caseJson.type}</li>
+                                }
                                 {
                                     (caseJson.charge === "Trafficking in controlled drugs" ||
                                         caseJson.charge === "Possession of controlled drugs" ||

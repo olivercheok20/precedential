@@ -285,6 +285,7 @@ class ResearchForm extends Component {
                 <h2>Input case details</h2>
                 <Form onSubmit={this.handleSubmit} inverted>
                     <Form.Field
+                        search
                         control={Select}
                         label='Charge'
                         options={chargeOptions}
@@ -295,6 +296,7 @@ class ResearchForm extends Component {
                         fluid
                     />
                     <Form.Field
+                        search
                         control={Select}
                         label={'Type of Drug'}
                         options={drugOptions}
@@ -317,6 +319,7 @@ class ResearchForm extends Component {
                         fluid
                     />
                     <Form.Field
+                        search
                         control={Select}
                         label={'Keywords'}
                         options={keywordOptions}

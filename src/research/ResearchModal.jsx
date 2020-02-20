@@ -39,8 +39,8 @@ class ResearchModal extends Component {
                     <p>{this.props.similarCases.length} similar cases found.</p>
                     <CaseList similarCases={this.props.similarCases} />
 
-                    <Divider />
                     {
+                        // <Divider />
                         // <Modal.Header as="h4">Sentencing Estimate</Modal.Header>
                         // <p>{this.props.sentencingEstimate}</p>
                     }

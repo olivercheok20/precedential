@@ -89,10 +89,8 @@ app.get('/research', async (req, res) => {
     minimumMonthsInReform = similarCasesData.minimumMonthsInReform;
     maximumMonthsInReform = similarCasesData.maximumMonthsInReform;
 
-    console.log(minimumMonthsInReform);
-    console.log(maximumMonthsInReform);
 
-    if (maximumMonthsInReform > 0) {
+    if ((maximumMonthsInReform > 0) && maximumMonths == 0) {
         rangeOfSentences = ["Maximum months in reformative training: " + maximumMonthsInReform];
         rangeOfSentences.push("Minimum months in reformative training: " + minimumMonthsInReform);
         rangeOfSentences.push("");
@@ -115,8 +113,6 @@ app.get('/research', async (req, res) => {
         rangeOfSentences.push("Maximum $" + maximumFine + " fine; Minimum $" + minimumFine + " fine")
         rangeOfSentences.push("Maximum " + maximumStrokes + " strokes; Minimum " + minimumStrokes + " strokes");
     }
-
-    console.log(rangeOfSentences);
 
     switch (charge) {
         case "Import and export of controlled drugs":

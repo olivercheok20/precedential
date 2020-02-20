@@ -15,6 +15,8 @@ class CaseList extends Component {
             } else {
                 return "Life imprisonment"
             }
+        } else if (caseJson.months_in_reformative_training > 0) {
+            return caseJson.months_in_reformative_training + " months in reformative training";
         } else {
             if (caseJson.strokes_of_cane) {
                 if (caseJson.fine) {

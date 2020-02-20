@@ -107,97 +107,97 @@ const keywordOptions = [
     {
         key: 'family circumstances',
         text: 'Family Circumstances',
-        value: 'Family Circumstances',
+        value: 'family circumstances',
     },
     {
         key: 'mental condition',
         text: 'Mental Condition',
-        value: 'Mental Condition',
+        value: 'mental condition',
     },
     {
         key: 'certificate of substantive assistance',
         text: 'Certificate of Substantive Assistance',
-        value: 'Certificate of Substantive Assistance',
+        value: 'certificate of substantive assistance',
     },
     {
         key: 'insufficient evidence',
         text: 'Insufficient Evidence',
-        value: 'Insufficient Evidence',
+        value: 'insufficient evidence',
     },
     {
         key: 'spiked drink',
         text: 'Spiked Drink',
-        value: 'Spiked Drink',
+        value: 'spiked drink',
     },
     {
         key: 'cooperative',
         text: 'Cooperative',
-        value: 'Cooperative',
+        value: 'cooperative',
     },
     {
         key: 'remand',
         text: 'Remand',
-        value: 'Remand',
+        value: 'remand',
     },
     {
         key: 'first offender',
         text: 'First Offender',
-        value: 'First Offender',
+        value: 'first offender',
     },
     {
         key: 'knowledge',
         text: 'Knowledge',
-        value: 'Knowledge',
+        value: 'knowledge',
     },
     {
         key: 'no wilful blindness',
         text: 'No Wilful Blindness',
-        value: 'No Wilful Blindness',
+        value: 'no wilful blindness',
     },
     {
         key: 'remorse',
         text: 'Remorse',
-        value: 'Remorse',
+        value: 'remorse',
     },
     {
         key: 'statutory presumption',
         text: 'Statutory Presumption',
-        value: 'Statutory Presumption',
+        value: 'statutory presumption',
     },
     {
         key: 'not mastermind',
         text: 'Not Mastermind',
-        value: 'Not Mastermind',
+        value: 'not mastermind',
     },
     {
         key: 'one-off transaction',
         text: 'One-off Transaction',
-        value: 'One-off Transaction',
+        value: 'one-off transaction',
     },
     {
         key: 'courier',
         text: 'Courier',
-        value: 'Courier',
+        value: 'courier',
     },
     {
         key: 'clean record',
         text: 'Clean Record',
-        value: 'Clean Record',
+        value: 'clean record',
     },
     {
         key: 'good character',
         text: 'Good Character',
-        value: 'Good Character',
+        value: 'good character',
     },
     {
         key: 'pleaded guilty',
         text: 'Pleaded Guilty',
-        value: 'Pleaded Guilty',
+        value: 'pleaded guilty',
     },
     {
         key: 'wilful blindness',
         text: 'Wilful Blindness',
-        value: 'Wilful Blindness',
+        value: 'wilful blindness',
     }
 ]
 

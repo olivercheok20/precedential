@@ -4,6 +4,7 @@ const firebase = require("firebase/app");
 const googleApi = require('./googleApi');
 const firebaseConfig = require('./firebaseConfig');
 const { allSimilarCasesData } = require('./similarCases');
+const { compareHelper, heuristic, sortByHeuristic } = require('./heuristic');
 const fs = require('fs');
 require("firebase/firestore");
 
@@ -38,7 +39,8 @@ app.get('/research', async (req, res) => {
     const charge = req.headers.charge;
     const type = req.headers.type;
     const quantity = req.headers.quantity;
-    const keywords = req.headers.keywords;
+    const keywords = req.headers.keywords.split(",");
+    // console.log(keywords);
 
     let class_of_drug = '';
 
@@ -69,7 +71,15 @@ app.get('/research', async (req, res) => {
         })
 
     similarCasesData = allSimilarCasesData(cases, charge, type);
-    similarCases = similarCasesData.similarCases;
+    // console.log("Before sorting");
+    // for (var i = 0; i < similarCasesData.similarCases.length; i++) {
+    //     console.log(heuristic(similarCasesData.similarCases[i], quantity, keywords));
+    // }
+    similarCases = sortByHeuristic(similarCasesData.similarCases, quantity, keywords);
+    // console.log("After sorting");
+    // for (var i = 0; i < similarCases.length; i++) {
+    //     console.log(heuristic(similarCases[i], quantity, keywords));
+    // }
     minimumStrokes = similarCasesData.minimumStrokes;
     maximumStrokes = similarCasesData.maximumStrokes;
     minimumMonths = similarCasesData.minimumMonths;
@@ -232,6 +242,10 @@ app.get('/research', async (req, res) => {
         prescribedSentence = "Maximum 3 years or $10,000 or both"
     } else if (statutesViolated === "11A Arranging or planning gatherings where controlled drugs are to be consumed or trafficked") {
         prescribedSentence = "Maximum 20 years and 10 strokes; Minimum 3 years"
+    }
+
+    if (prescribedSentence === "Death") {
+        sentencingEstimate = "Death";
     }
 
     res.send({

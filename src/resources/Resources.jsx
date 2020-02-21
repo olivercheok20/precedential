@@ -11,7 +11,7 @@ class Resources extends Component {
         console.log("Downloading resources...");
         const res = await fetch('/resources');
         const blob = await res.blob();
-        download(blob, 'resources.pdf');
+        download(blob, 'LIP Resources v4 210220.pdf');
     }
 
     render() {

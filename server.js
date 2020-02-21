@@ -31,7 +31,7 @@ app.get('/database', (req, res) => {
 });
 
 app.get('/resources', (req, res) => {
-    const file = "./resources.pdf"
+    const file = "./LIP Resources v4 210220.pdf"
     res.download(file);
 });
 

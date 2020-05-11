@@ -2,7 +2,7 @@
 const config = {
     apiKey: "AIzaSyAWfGKenmRNuZiyMBEVFAwfAUja2zJsBO0",
     authDomain: "precedential-uspenguins.firebaseapp.com",
-    databaseURL: "https://precedential-uspenguins.firebaseio.com/.json",
+    databaseURL: "https://precedential-uspenguins.firebaseio.com",
     projectId: "precedential-uspenguins",
     storageBucket: "precedential-uspenguins.appspot.com",
     messagingSenderId: "170438518858",

@@ -22,12 +22,12 @@ app.get('/database', (req, res) => {
     fs.readFile('credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Drive API.
-        googleApi.authorize(JSON.parse(content), googleApi.downloadFile);
+        googleApi.authorize(JSON.parse(content), googleApi.downloadFile, () => res.download('./database.xlsx'));
     });
-    // TODO: Current a very hacky solution, ideally want to execute res.download() right after drive download
-    setTimeout(() => {
-        res.download('./database.xlsx')
-    }, 2500);
+    // // TODO: Current a very hacky solution, ideally want to execute res.download() right after drive download
+    // setTimeout(() => {
+    //     res.download('./database.xlsx')
+    // }, 2500);
 });
 
 app.get('/resources', (req, res) => {

@@ -28,7 +28,7 @@ const DEST_PATH = './database.xlsx';
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+function authorize(credentials, callback, callback2) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -37,7 +37,7 @@ function authorize(credentials, callback) {
     fs.readFile(TOKEN_PATH, (err, token) => {
         if (err) return getAccessToken(oAuth2Client, callback);
         oAuth2Client.setCredentials(JSON.parse(token));
-        callback(oAuth2Client);
+        callback(oAuth2Client, callback2);
     });
 }
 
@@ -76,7 +76,7 @@ function getAccessToken(oAuth2Client, callback) {
  * Downloads a particular file from Google Drive.
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function downloadFile(auth) {
+function downloadFile(auth, callback) {
     const drive = google.drive({version: 'v3', auth});
     const fileDest = fs.createWriteStream(DEST_PATH);
     let progress = 0;
@@ -100,7 +100,7 @@ function downloadFile(auth) {
                     process.stdout.write(`Downloaded ${progress} bytes`);
                 }   
             })  
-            .pipe(fileDest);
+            .pipe(fileDest).on('finish', () => callback());
         }
     );
 }

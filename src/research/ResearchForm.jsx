@@ -124,9 +124,9 @@ class ResearchForm extends Component {
                     <Form.Field
                         search
                         control={Select}
-                        label={'Keywords'}
+                        label={'Circumstances'}
                         options={keywordOptions}
-                        placeholder='Keywords'
+                        placeholder='Circumstances'
                         name='keywords'
                         value={keywords}
                         onChange={this.handleDropdownChange('keywords')}

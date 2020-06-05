@@ -94,7 +94,7 @@ class App extends Component {
               </p>
               <p>
               Communications between you and Precendential.com and any data you voluntarily offer in the usage of the site is only protected by our Privacy Policy, but NOT protected by the attorney-client privilege since 
-              USPenguins is not a law firm and is not providing legal advice. No employee of TermsFeed, contractor, or attorney is authorized to provide you with any advice about what information (including agreements, 
+              USPenguins is not a law firm and is not providing legal advice. No employee of USPenguins, contractor, or attorney is authorized to provide you with any advice about what information (including agreements, 
               forms and documents) to use or how to use or how to complete them.
               </p>
             </Modal.Description>
